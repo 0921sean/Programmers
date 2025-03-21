@@ -1,58 +1,46 @@
 from collections import deque
 
 def solution(rectangle, characterX, characterY, itemX, itemY):
-    graph = {}  # 특정 위치에서 이동할 수 있는 위치들
+    # 좌표 2배 확장 (다각형 사이 경로 구분을 위해)
+    field = [[-1] * 102 for _ in range(102)]
     
-    border_points = set()   # 다각형 테두리
+    # 다각형 영역 표시
+    for rect in rectangle:
+        x1, y1, x2, y2 = map(lambda x: x*2, rect)
+        for i in range(x1, x2+1):
+            for j in range(y1, y2+1):
+                # 다각형 내부 표시
+                if x1 < i < x2 and y1 < j < y2:
+                    field[i][j] = 0
+                # 내부 제외하고 테두리 표시
+                elif field[i][j] != 0:
+                    field[i][j] = 1
     
-    # 직사각형 모두 포함
-    for rect in rectangle:
-        x1, y1, x2, y2 = rect
-        
-        for x in range(x1, x2 + 1):
-            border_points.add((x, y1))
-            border_points.add((x, y2))
-        for y in range(y1, y2 + 1):
-            border_points.add((x1, y))
-            border_points.add((x2, y))
-        
-    # 직사각형 내부 점들을 제거
-    for rect in rectangle:
-        x1, y1, x2, y2 = rect
-        
-        for x in range(x1 + 1, x2):
-            for y in range(y1 + 1, y2):
-                if (x, y) in border_points:
-                    border_points.remove((x, y))
-                    
-    # 움직일 수 있는 테두리 기록
-    for x, y in border_points:
-        graph[(x, y)] = []
-        
-        for nx, ny in [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]:
-            if (nx, ny) in border_points:
-                graph[(x, y)].append((nx, ny))
-                
-    print(border_points)
-    print(graph)
-                
+    # 시작점, 목표점 모두 2배 확장
+    characterX *= 2
+    characterY *= 2
+    itemX *= 2
+    itemY *= 2
+    
     # BFS
-    queue = deque([((characterX, characterY), 0)])
-    visited = {(characterX, characterY)}
+    queue = deque([(characterX, characterY, 0)])
+    field[characterX][characterY] = -1  # 방문 표시
     
     while queue:
-        (x, y), distance = queue.popleft()  # 위치, 이동거리
+        x, y, distance = queue.popleft()  # 위치, 이동거리
         
-        # 아이템 위치 도달하면 이동거리 반환
-        if (x, y) == (itemX, itemY):
-            return distance
+        # 아이템 위치 도달한 경우
+        if x == itemX and y == itemY:
+            return distance // 2    # 원래 거리로 변환
         
-        for nx, ny in graph[(x, y)]:
-            if (nx, ny) not in visited:
-                visited.add((nx, ny))
-                queue.append(((nx, ny), distance + 1))
+        for dx, dy in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+            nx, ny = x + dx, y + dy
+            
+            if 0 <= nx <= 101 and 0 <= ny <= 101 and field[nx][ny] == 1:
+                field[nx][ny] = -1  # 방문 기록
+                queue.append((nx, ny, distance + 1))
     
-    # 아이템 위치에 도달하지 못하면 -1 반환
+    # 아이템 위치에 도달할 수 없는 경우
     return -1
 
 # 테스트할 케이스들
