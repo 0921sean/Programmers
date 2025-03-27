@@ -1,14 +1,11 @@
 def solution(arr):
-    answer = []
+    stack = []
     
-    # 첫 번째 원소는 무조건 추가
-    answer.append(arr[0])
-    
-    for i in range(1, len(arr)):
-        if arr[i] != arr[i-1]:
-            answer.append(arr[i])
+    for num in arr:
+        if len(stack) == 0 or num != stack[-1]:
+            stack.append(num)
             
-    return answer
+    return stack
 
 # 테스트 케이스
 if __name__ == "__main__":

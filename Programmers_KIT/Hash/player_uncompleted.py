@@ -1,15 +1,14 @@
 def solution(participant, completion):
-    part_dict = {}
+    player_dict = {}
     
     for part in participant:
-        part_dict[part] = part_dict.get(part, 0) + 1
-        
+        player_dict[part] = player_dict.get(part, 0) + 1
     for comp in completion:
-        part_dict[comp] -= 1
-        
-    for name, count in part_dict.items():
-        if count > 0:
-            return name
+        player_dict[comp] -= 1
+    
+    for key, value in player_dict.items():
+        if value == 1:
+            return key
 
 # 테스트할 케이스들
 if __name__ == "__main__":

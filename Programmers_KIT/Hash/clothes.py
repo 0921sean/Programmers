@@ -1,14 +1,14 @@
 def solution(clothes):
-    hash_map = {}
+    clothes_dict = {}
     answer = 1
     
     for cloth in clothes:
-        hash_map[cloth[1]] = hash_map.get(cloth[1], 0) + 1
-    
-    for count in hash_map.values():
-        answer *= (count + 1)
-    answer -= 1
+        clothes_dict[cloth[1]] = clothes_dict.get(cloth[1], 0) + 1
         
+    for num in clothes_dict.values():
+        answer *= (num+1)
+    answer -= 1
+    
     return answer
 
 # 테스트할 케이스들
