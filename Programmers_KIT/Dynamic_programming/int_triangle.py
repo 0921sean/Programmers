@@ -8,7 +8,7 @@ def solution(triangle):
             for j in range(1, len(line)):
                 dp[i][j] = max(dp[i-1][j-1], dp[i-1][j]) + line[j]
         dp[i][0] = dp[i-1][0] + line[0]
-        print(dp)
+        # print(dp)
     return max(dp[len(triangle)-1])
 
 # 테스트 케이스
