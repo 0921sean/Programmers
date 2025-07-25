@@ -1,31 +1,17 @@
 def solution(s):
-    # 스택을 이용한 풀이
     stack = []
     
-    for char in s:
-        if char == '(':
-            stack.append(char)
-        else:
-            if not stack:
+    for p in s:
+        if p == '(':
+            stack.append(p)
+        else:   # if p == ')'
+            if len(stack) == 0 or stack[-1] != '(':
                 return False
             stack.pop()
-    
-    return len(stack) == 0
-    
-    # 아래 풀이도 가능
-    # count = 0
-    
-    # for par in s:
-    #     if par == "(":
-    #         count += 1
-    #     else:
-    #         if count == 0:
-    #             return False
-    #         count -= 1
-    # if count == 0:
-    #     return True
-    # else:
-    #     return False
+            
+    if len(stack) != 0:
+        return False
+    return True
     
 # 테스트 케이스
 if __name__ == "__main__":

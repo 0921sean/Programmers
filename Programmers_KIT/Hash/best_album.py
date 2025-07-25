@@ -1,28 +1,30 @@
 def solution(genres, plays):
-    genre_plays = {}
-    song_plays = {}
+    genre_dict = {}
+    genre_play_dict = {}
     answer = []
     
+    # 장르별 재생 횟수 딕셔너리 생성 ({'classic': 1450, 'pop': 3100})
     for i in range(len(genres)):
-        genre, play = genres[i], plays[i]
-        genre_plays[genre] = genre_plays.get(genre, 0) + play   # 장르별 총 재생 횟수
+        genre_dict[genres[i]] = genre_dict.get(genres[i], 0) + plays[i]
         
-        if genre in song_plays:
-            song_plays[genre].append((i, play)) # (인덱스, 노래별 재생 횟수)
-        else:
-            song_plays[genre] = [(i, play)]
-        
-    sorted_genres = sorted(genre_plays.keys(), key=lambda x: genre_plays[x], \
-                          reverse = True)   # 많이 재생된 장르 순으로 정렬
+    # 재생 횟수 기준 내림차순으로 정렬 (['pop', 'classic'])
+    sorted_genres = [k for k, v in sorted(genre_dict.items(), key=lambda x: x[1], reverse=True)]
     
+    # 장르별 재생 횟수와 인덱스 저장 ({'classic': [[500, 0], [150, 2], [800, 3]], 'pop': [[600, 1], [2500, 4]]})
     for genre in sorted_genres:
-        sorted_songs = sorted(song_plays[genre], key=lambda x: (-x[1], x[0]))
-        
-        for i in range(min(2, len(sorted_songs))):
-            answer.append(sorted_songs[i][0])
+        for i in range(len(genres)):
+            if genres[i] == genre:
+                genre_play_dict[genres[i]] = genre_play_dict.get(genres[i], []) + [[plays[i], i]]
+    
+    # 장르별로 재생 횟수 내림차순으로 정렬하고, 인덱스 오름차순으로 정렬 ({'classic': [[800, 3], [500, 0], [150, 2]], 'pop': [[2500, 4], [600, 1]]})
+    for genre_play in genre_play_dict.values():
+        sorted_genre_plays = sorted(genre_play, key=lambda x: (-x[0], x[1]))
+        # 상위 2개의 곡만 인덱스 추출
+        for i in range(min(len(sorted_genre_plays), 2)):
+            answer.append(sorted_genre_plays[i][1])
             
     return answer
-
+            
 # 테스트할 케이스들
 if __name__ == "__main__":
     genres_list = [["classic", "pop", "classic", "classic", "pop"]]
