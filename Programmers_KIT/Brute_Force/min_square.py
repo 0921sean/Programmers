@@ -1,17 +1,11 @@
 def solution(sizes):
-    max_x = 0
-    max_y = 0
-    
+    max_list = []
+    min_list = []
     for size in sizes:
-        x, y = size
-        if x >= y:
-            max_x = max(max_x, x)
-            max_y = max(max_y, y)
-        else:
-            max_x = max(max_x, y)
-            max_y = max(max_y, x)
-            
-    return max_x * max_y
+        max_list.append(max(size[0], size[1]))
+        min_list.append(min(size[0], size[1]))
+        
+    return max(max_list) * max(min_list)
 
 # 테스트할 케이스들
 if __name__ == "__main__":

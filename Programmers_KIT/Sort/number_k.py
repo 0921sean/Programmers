@@ -1,9 +1,9 @@
 def solution(array, commands):
-    answer = []
-    
+    answer = []    
     for command in commands:
         i, j, k = command
-        answer.append(sorted(array[i-1:j])[k-1])
+        sorted_array = sorted(array[i-1:j])
+        answer.append(sorted_array[k-1])
     return answer
 
 # 테스트할 케이스들

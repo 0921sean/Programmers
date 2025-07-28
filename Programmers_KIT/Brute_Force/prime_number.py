@@ -1,32 +1,25 @@
 from itertools import permutations
 
 def solution(numbers):
-    nums = []
-    
-    for i in range(1, len(numbers)+1):
-        perms = list(permutations(numbers, i))
-        for perm in perms:
-            nums.append(int(''.join(perm)))
-    
-    nums = set(nums)
-    
-    count = 0
-    for num in nums:
-        if is_prime(num):
-            count += 1
-            
-    return count
-
-def is_prime(num):
-    # 0 또는 1인 경우 소수 아님
-    if num < 2:
-        return False
-    
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
-            return False
-        
-    return True
+    number_set = set()
+    answer = []
+    # 숫자의 순열을 구하고, 중복 없애기
+    for i in range(1, len(numbers) + 1):
+        perms = permutations(numbers, i)
+        for p in perms:
+            number = int(''.join(p))
+            number_set.add(number)
+    # 소수 판별
+    for number in number_set:
+        isPrime = True
+        if number == 0 or number == 1:
+            isPrime = False
+        for i in range(2, int(number ** 0.5) + 1):
+            if number % i == 0:
+                isPrime = False
+        if isPrime:
+            answer.append(number)
+    return len(answer)
 
 # 테스트 케이스
 numbers_list = ["17", "011"]

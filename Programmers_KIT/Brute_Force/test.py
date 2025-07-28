@@ -1,24 +1,22 @@
 def solution(answers):
-    correct_list = []   # 정답 개수
-    answer = []
+    number_dict = {
+        1: [1, 2, 3, 4, 5],
+        2: [2, 1, 2, 3, 2, 4, 2, 5],
+        3: [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    }
+    score_dict = {1: 0, 2: 0, 3: 0}
+    high_scores = []
     
-    # 각 수포자 규칙
-    rule_list = [[1, 2, 3, 4, 5], [2, 1, 2, 3, 2, 4, 2, 5], [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]]
-    
-    for rule in rule_list:
-        question_num = 0
-        correct = 0
-    
-        while question_num < len(answers):
-            if answers[question_num] == rule[question_num % len(rule)]:
-                correct += 1
-            question_num += 1
-        correct_list.append(correct)
-    
-    for idx, correct in enumerate(correct_list):
-        if correct == max(correct_list):
-            answer.append(idx+1)
-    return answer
+    for person, number in number_dict.items():
+        for i, answer in enumerate(answers):
+            if answer == number[i % len(number)]:
+                score_dict[person] += 1
+                
+    for person, score in score_dict.items():
+        if score == max(score_dict.values()):
+            high_scores.append(person)
+        
+    return high_scores
 
 # 테스트할 케이스들
 if __name__ == "__main__":
