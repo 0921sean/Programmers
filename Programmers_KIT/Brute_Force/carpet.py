@@ -1,10 +1,11 @@
 def solution(brown, yellow):
+    # total = w * h
     total = brown + yellow
-    
-    for i in range(1, total):
-        if total % i == 0:
-            if (i - 2) * ((total//i) - 2) == yellow:
-                return [(total//i), i]
+    # w_plus_h = w + h
+    w_plus_h = (brown + 4) // 2
+    for h in range(1, w_plus_h):
+        if total == h * (w_plus_h - h):
+            return [w_plus_h - h, h]
             
 # 테스트 케이스
 brown_list = [10, 8, 24]

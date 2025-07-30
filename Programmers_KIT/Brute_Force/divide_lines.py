@@ -1,12 +1,11 @@
 def solution(n, wires):
-    graph = [[] for _ in range(n+1)]    # 1부터 n까지 노드 번호
+    graph = [[] for _ in range(n+1)]
     
-    # 양방향 연결
     for v1, v2 in wires:
         graph[v1].append(v2)
         graph[v2].append(v1)
         
-    # 노드 개수 세기
+    # 연결된 노드 개수 세는 함수
     def count_nodes(node, parent):
         count = 1
         for neighbor in graph[node]:
@@ -14,20 +13,17 @@ def solution(n, wires):
                 count += count_nodes(neighbor, node)
         return count
     
-    min_diff = n    # 최소 차이값
-    
+    min_diff = n # 최소 차이
     for v1, v2 in wires:
-        # 임시적으로 양방향 연결 해제
         graph[v1].remove(v2)
         graph[v2].remove(v1)
         
-        count1 = count_nodes(v1, -1)
-        count2 = n - count1
+        num_lines1 = count_nodes(v1, -1)
+        num_lines2 = n - num_lines1
         
-        diff = abs(count1 - count2)
-        min_diff = min(min_diff, diff)
+        diff = abs(num_lines1 - num_lines2)
+        min_diff = min(diff, min_diff)
         
-        # 다시 연결
         graph[v1].append(v2)
         graph[v2].append(v1)
         

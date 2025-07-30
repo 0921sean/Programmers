@@ -1,23 +1,17 @@
 def solution(numbers, target):
-    answer = 0
-    
-    def dfs(index, sum):
-        nonlocal answer
+    def dfs(index, result_list):
+        # print(f"Index: {index}, Result List: {result_list}")
         if index == len(numbers):
-            if sum == target:
-                answer += 1
-            return
-        
-        # 현재 수를 더하는 경우
-        dfs(index + 1, sum + numbers[index])
-        
-        # 현재 수를 빼는 경우
-        dfs(index + 1, sum - numbers[index])
-        
-    # 0번 인덱스, sum=0부터 시작
-    dfs(0, 0)
-    
-    return answer
+            return result_list.count(target)
+        new_result = []
+        number = numbers[index]
+        for result in result_list:
+            new_result.append(result + number)
+            new_result.append(result - number)
+        index += 1
+        return dfs(index,new_result)
+            
+    return dfs(0, [0])
 
 # Solution 클래스 인스턴스 생성 및 함수 호출
 if __name__ == "__main__":
