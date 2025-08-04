@@ -1,35 +1,30 @@
 from collections import deque
 
 def solution(maps):
-    n = len(maps)       # 행의 개수
-    m = len(maps[0])    # 열의 개수
-    visited = [[-1 for _ in range(m)] for _ in range(n)]    # 방문 횟수(-1 or NOT) 및 이동 거리
+    n = len(maps)
+    m = len(maps[0])
+    moved = [[-1 for _ in range(m)] for _ in range(n)]
+    directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+    answer = []
     
-    directions = [[0, 1], [0, -1], [-1, 0], [1, 0]]
-    
-    # BFS
     queue = deque()
-    queue.append((0, 0))    # (0, 0)에서 출발
-    visited[0][0] = 1
+    queue.append((0, 0))
+    moved[0][0] = 1
     
     while queue:
         x, y = queue.popleft()
         
-        # 도착 지점 도달하면 이동 거리 반환
-        if x == n-1 and y == m-1:
-            return visited[x][y]
+        if x == m-1 and y == n-1:
+            return moved[y][x]
         
-        # 상하좌우 네 방향에 대해
         for dx, dy in directions:
             nx = x + dx
             ny = y + dy
             
-            # 맵 범위 내이며, 벽이 아니며, 아직 방문하지 않은 경우
-            if 0 <= nx < n and 0 <= ny < m and maps[nx][ny] == 1 and visited[nx][ny] == -1:
-                visited[nx][ny] = visited[x][y] + 1 # 이전 위치의 거리 + 1
+            if 0 <= nx < m and 0 <= ny < n and maps[ny][nx] == 1 and moved[ny][nx] == -1:
+                moved[ny][nx] = moved[y][x] + 1
                 queue.append((nx, ny))
-        
-    # 도착 지점에 도달할 수 없는 경우 -1 반환
+    
     return -1
 
 # Solution 클래스 인스턴스 생성 및 함수 호출

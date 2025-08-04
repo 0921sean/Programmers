@@ -1,7 +1,6 @@
 from collections import deque
 
 def solution(begin, target, words):
-    # target이 words 안에 없으면 반환 불가
     if target not in words:
         return 0
     
@@ -12,26 +11,23 @@ def solution(begin, target, words):
                 diff_count += 1
         return diff_count == 1
     
-    visited = {word: False for word in words}   # 방문 기록
-    queue = deque([(begin, 0)]) # (단어, 변환 횟수)
+    visited = {word: False for word in words}
+    queue = deque([(begin, 0)])
     
-    # BFS
     while queue:
-        current_word, steps = queue.popleft()
+        curr_word, changed = queue.popleft()
         
-        # 현재 단어가 target에 도달하면 변환 횟수 반환
-        if current_word == target:
-            return steps
+        if curr_word == target:
+            return changed
         
         for word in words:
-            # 거치지 않은 단어고, 한 글자만 다르면
-            if not visited[word] and can_transform(current_word, word):
+            if not visited[word] and can_transform(curr_word, word):
                 visited[word] = True
-                queue.append((word, steps + 1))
-        
+                queue.append((word, changed + 1))
+                
     return 0
 
-# Solution 클래스 인스턴스 생성 및 함수 호출
+# 테스트 케이스
 if __name__ == "__main__":
     begin_list = ["hit", "hit"]
     target_list = ["cog", "cog"]

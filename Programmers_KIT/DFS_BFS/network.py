@@ -7,14 +7,14 @@ def solution(n, computers):
         
         visited.add(node)
         
-        for neighbor in range(n):
-            if computers[node][neighbor] == 1 and neighbor not in visited:
+        for neighbor, isConnected in enumerate(computers[node]):
+            if isConnected == 1 and neighbor not in visited:
                 dfs(neighbor)
                 
-    for computer in range(n):
-        if computer not in visited:
+    for i in range(n):
+        if i not in visited:
             answer += 1
-            dfs(computer)
+            dfs(i)
             
     return answer
 
