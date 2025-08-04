@@ -1,9 +1,11 @@
 from collections import deque
 
 def solution(begin, target, words):
+    # 주어진 단어 목록에 타겟 단어 없으면 0 반환
     if target not in words:
         return 0
     
+    # 단어가 한 글자만 다른지 확인하는 함수
     def can_transform(word1, word2):
         diff_count = 0
         for c1, c2 in zip(word1, word2):
