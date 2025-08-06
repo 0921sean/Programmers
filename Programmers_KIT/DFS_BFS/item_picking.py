@@ -1,47 +1,42 @@
 from collections import deque
 
 def solution(rectangle, characterX, characterY, itemX, itemY):
-    # 좌표 2배 확장 (다각형 사이 경로 구분을 위해)
-    field = [[-1] * 102 for _ in range(102)]
+    edges = set()
+    not_edges = set()
+    moved = [[0 for _ in range(101)] for _ in range(101)]
+    directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
     
-    # 다각형 영역 표시
+    # 테두리 집합 구성
     for rect in rectangle:
-        x1, y1, x2, y2 = map(lambda x: x*2, rect)
-        for i in range(x1, x2+1):
-            for j in range(y1, y2+1):
-                # 다각형 내부 표시
-                if x1 < i < x2 and y1 < j < y2:
-                    field[i][j] = 0
-                # 내부 제외하고 테두리 표시
-                elif field[i][j] != 0:
-                    field[i][j] = 1
-    
-    # 시작점, 목표점 모두 2배 확장
-    characterX *= 2
-    characterY *= 2
-    itemX *= 2
-    itemY *= 2
-    
-    # BFS
-    queue = deque([(characterX, characterY, 0)])
-    field[characterX][characterY] = -1  # 방문 표시
+        startX, startY, endX, endY = map(lambda x: x * 2, rect)
+        for i in range(startX, endX + 1):
+            edges.add((i, startY))
+            edges.add((i, endY))
+        for i in range(startY + 1, endY):
+            edges.add((startX, i))
+            edges.add((endX, i))
+        for i in range(startX + 1, endX):
+            for j in range(startY + 1, endY):
+                not_edges.add((i, j))     
+    edges -= not_edges
+                
+    queue = deque()
+    queue.append([characterX * 2, characterY * 2])
     
     while queue:
-        x, y, distance = queue.popleft()  # 위치, 이동거리
+        x, y = queue.popleft()
         
-        # 아이템 위치 도달한 경우
-        if x == itemX and y == itemY:
-            return distance // 2    # 원래 거리로 변환
-        
-        for dx, dy in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
-            nx, ny = x + dx, y + dy
+        for dx, dy in directions:
+            nx = x + dx
+            ny = y + dy
             
-            if 0 <= nx <= 101 and 0 <= ny <= 101 and field[nx][ny] == 1:
-                field[nx][ny] = -1  # 방문 기록
-                queue.append((nx, ny, distance + 1))
-    
-    # 아이템 위치에 도달할 수 없는 경우
-    return -1
+            if (nx, ny) in edges and moved[nx][ny] == 0:
+                moved[nx][ny] = moved[x][y] + 1
+                queue.append([nx, ny])
+                # print(f"현재 위치: ({nx}, {ny}), 이동 거리: {moved[nx][ny]}")
+                
+            if nx == itemX * 2 and ny == itemY * 2:
+                return moved[nx][ny] // 2
 
 # 테스트할 케이스들
 if __name__ == "__main__":
@@ -55,4 +50,4 @@ if __name__ == "__main__":
     
     for i, (rectangle, characterX, characterY, itemX, itemY, expected) in enumerate(test_cases):
         result = solution(rectangle, characterX, characterY, itemX, itemY)
-        print(f"테스트 케이스 {i+1}: 결과 = {result}, 기대값 = {expected}, {'성공' if result == expected else '실패'}")
+        print(result)
