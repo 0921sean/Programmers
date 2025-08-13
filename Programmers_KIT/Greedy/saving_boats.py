@@ -1,21 +1,17 @@
 def solution(people, limit):
     # 무게순으로 정렬
-    people.sort()
-    
+    people.sort(reverse=True)
+    boat = 0
     left = 0
     right = len(people) - 1
     
-    boats = 0
-    
     while left <= right:
         if people[left] + people[right] <= limit:
-            left += 1
             right -= 1
-        else:
-            right -= 1
-        boats += 1
+        boat += 1
+        left += 1
         
-    return boats
+    return boat
 
 # 테스트 케이스
 if __name__ == "__main__":

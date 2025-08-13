@@ -1,22 +1,14 @@
 def solution(n, lost, reserve):
-    # 여벌 체육복을 가져온 학생들이 도난당한 경우 처리
     actual_reserve = list(set(reserve) - set(lost))
     actual_lost = list(set(lost) - set(reserve))
     
-    answer = n - len(actual_lost)
-    
-    actual_reserve.sort()
-    actual_lost.sort()
-    
-    for student in actual_lost:
-        if student - 1 in actual_reserve:
-            actual_reserve.remove(student - 1)
-            answer += 1
-        elif student + 1 in actual_reserve:
-            actual_reserve.remove(student + 1)
-            answer += 1
+    for reserve in actual_reserve:
+        if reserve - 1 in actual_lost:
+            actual_lost.remove(reserve - 1)
+        elif reserve + 1 in actual_lost:
+            actual_lost.remove(reserve + 1)
             
-    return answer
+    return n - len(actual_lost)
 
 # 테스트 케이스
 if __name__ == "__main__":
