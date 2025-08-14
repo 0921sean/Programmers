@@ -1,15 +1,17 @@
 def solution(triangle):
-    dp = [[0 for _ in range(len(triangle))] for _ in range(len(triangle))]
+    n = len(triangle)
+    dp = [[] for _ in range(n)]
     
-    for i in range(len(triangle)):
-        line = triangle[i]
-        if len(line) > 1:
-            # dp[len(line)-1] = dp[len(line)-1] + line[-1]
-            for j in range(1, len(line)):
-                dp[i][j] = max(dp[i-1][j-1], dp[i-1][j]) + line[j]
-        dp[i][0] = dp[i-1][0] + line[0]
-        # print(dp)
-    return max(dp[len(triangle)-1])
+    dp[0] = triangle[0]
+    
+    for i in range(1, n):
+        dp[i].append(dp[i-1][0] + triangle[i][0])
+        for j in range(1, i):
+            dp[i].append(max(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j])
+        dp[i].append(dp[i-1][-1] + triangle[i][-1])
+        print(f"dp[{i}]: {dp[i]}")
+        
+    return max(dp[n-1])
 
 # 테스트 케이스
 if __name__ == "__main__":
