@@ -4,6 +4,7 @@ def solution(progresses, speeds):
     left_times = []
     answer = []
     
+    # left_times = [7, 3, 9]
     for i in range(len(progresses)):
         left_times.append(math.ceil((100 - progresses[i]) / speeds[i]))
         

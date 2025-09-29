@@ -14,7 +14,8 @@ def solution(begin, target, words):
         return diff_count == 1
     
     visited = {word: False for word in words}
-    queue = deque([(begin, 0)])
+    queue = deque()
+    queue.append((begin, 0))
     
     while queue:
         curr_word, changed = queue.popleft()

@@ -15,7 +15,7 @@ def solution(n, costs):
             parents[ancestor(start, parents)] = end
             bridges += 1
             total_costs += cost
-            print(f"다리 건설: {start} -> {end}, 비용: {cost}, 총 비용: {total_costs}")
+            # print(f"다리 건설: {start} -> {end}, 비용: {cost}, 총 비용: {total_costs}")
         if bridges == n-1:
             return total_costs
         

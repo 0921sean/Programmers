@@ -5,7 +5,7 @@ def solution(numbers):
     answer = []
     # 숫자의 순열을 구하고, 중복 없애기
     for i in range(1, len(numbers) + 1):
-        perms = permutations(numbers, i)
+        perms = permutations(numbers, i)    # perms = [('0', '1'), ('0', '1'), ('1', '0'), ('1', '1'), ('1', '0'), ('1', '1')]
         for p in perms:
             number = int(''.join(p))
             number_set.add(number)

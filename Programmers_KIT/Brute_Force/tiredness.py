@@ -6,13 +6,12 @@ def solution(k, dungeons):
         fatigue = k # 현재 피로도
         num = 0 # 현재 던전 개수
         for dungeon in perm:
-            min_need, cost = dungeon[0], dungeon[1]
+            min_need, cost = dungeon
             if fatigue >= min_need:
                 fatigue -= cost
                 num += 1
         if num > max_num:
             max_num = num
-        # print(f"Current permutation: {perm}, Fatigue left: {fatigue}, Dungeons cleared: {num}")
     return max_num
             
 # 테스트 케이스

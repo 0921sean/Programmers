@@ -10,13 +10,13 @@ def solution(genres, plays):
     # 재생 횟수 기준 내림차순으로 정렬 (['pop', 'classic'])
     sorted_genres = [k for k, v in sorted(genre_dict.items(), key=lambda x: x[1], reverse=True)]
     
-    # 장르별 재생 횟수와 인덱스 저장 ({'classic': [[500, 0], [150, 2], [800, 3]], 'pop': [[600, 1], [2500, 4]]})
+    # 장르별 재생 횟수와 인덱스 저장 ({'pop': [[600, 1], [2500, 4]], 'classic': [[500, 0], [150, 2], [800, 3]]})
     for genre in sorted_genres:
         for i in range(len(genres)):
             if genres[i] == genre:
                 genre_play_dict[genres[i]] = genre_play_dict.get(genres[i], []) + [[plays[i], i]]
     
-    # 장르별로 재생 횟수 내림차순으로 정렬하고, 인덱스 오름차순으로 정렬 ({'classic': [[800, 3], [500, 0], [150, 2]], 'pop': [[2500, 4], [600, 1]]})
+    # 장르별로 재생 횟수 내림차순으로 정렬하고, 인덱스 오름차순으로 정렬 ({'pop': [[2500, 4], [600, 1]], 'classic': [[800, 3], [500, 0], [150, 2]]})
     for genre_play in genre_play_dict.values():
         sorted_genre_plays = sorted(genre_play, key=lambda x: (-x[0], x[1]))
         # 상위 2개의 곡만 인덱스 추출

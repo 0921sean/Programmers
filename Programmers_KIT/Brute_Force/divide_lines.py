@@ -13,7 +13,7 @@ def solution(n, wires):
                 count += count_nodes(neighbor, node)
         return count
     
-    min_diff = n # 최소 차이
+    min_diff = n    # 최소 차이
     for v1, v2 in wires:
         graph[v1].remove(v2)
         graph[v2].remove(v1)

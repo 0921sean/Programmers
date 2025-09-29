@@ -22,7 +22,6 @@ def solution(prices):
         # 만약 price_list가 비어있다면 또는 현재 가격이 이전 가격보다 높거나 같으면, 현재 가격을 추가하고 시간을 기록
         if not price_list or prices[i] >= price_list[-1][1]:
             price_list.append([i, prices[i]])
-            print(f"현재 가격: {price_list}, 시간: {time_list}")
             continue
         # 현재 가격이 이전 가격보다 낮으면, 이전 가격을 제거하고 시간을 기록
         while True:
@@ -32,7 +31,6 @@ def solution(prices):
             else:
                 price_list.append([i, prices[i]])
                 break
-        print(f"현재 가격: {price_list}, 시간: {time_list}")
                 
     for i in range(len(time_list)):
         if time_list[i] == 0:

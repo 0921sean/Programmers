@@ -1,31 +1,30 @@
 def solution(distance, rocks, n):
     rocks.sort()
-    rocks.append(distance)  # 마지막 도착 지점 추가
+    rocks.append(distance)
     
-    left, right = 1, distance   # 최소 거리 범위 설정
-    answer = 0
+    left, right = 1, distance
     
     while left <= right:
         mid = (left + right) // 2
-        removed = 0 # 제거한 바위 개수
+        removed = 0 # 제거된 바위 수
         prev = 0    # 이전 바위 위치
-        min_distance = float('inf') # 현재 상황에서의 최소 거리
+        min_distance = float('inf')
         
         for rock in rocks:
-            if rock - prev < mid:   # 거리가 mid보다 작다면 바위 제거
+            if rock - prev < mid:
                 removed += 1
                 if removed > n:
                     break
-            else:   # 거리가 mid 이상이면 유지
-                min_distance = min(min_distance, rock - prev)
-                prev = rock # 이전 바위 위치 업데이트
-                
-        if removed > n:
+            else:
+                min_distance = min(min_distance, rock - prev)   # 최소 거리 업데이트
+                prev = rock
+            
+        if removed > n: # 제거한 바위 수가 n을 넘으면
             right = mid - 1
         else:
             answer = min_distance
             left = mid + 1
-    
+            
     return answer
 
 # 테스트 케이스

@@ -1,5 +1,6 @@
 def solution(priorities, location):
-    queue = [(i, p) for i, p in enumerate(priorities)]  # [2, 1, 3, 2] -> [(0, 2), (1, 1), (2, 3), (3, 2)]
+    # queue = [(0, 2), (1, 1), (2, 3), (3, 2)]
+    queue = [(i, p) for i, p in enumerate(priorities)]
     order = 0   # 실행 순서
     
     while queue:

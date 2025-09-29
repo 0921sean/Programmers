@@ -2,7 +2,7 @@ def solution(N, number):
     dp = [set() for _ in range(9)]
     
     for i in range(1, 6):
-        dp[i].add(int(str(N) * (i)))
+        dp[i].add(int(str(N) * i))
         
     for i in range(2, 9):
         for j in range(1, i):

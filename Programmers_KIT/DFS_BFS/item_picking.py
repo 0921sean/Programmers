@@ -21,7 +21,7 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
     edges -= not_edges
                 
     queue = deque()
-    queue.append([characterX * 2, characterY * 2])
+    queue.append((characterX * 2, characterY * 2))
     
     while queue:
         x, y = queue.popleft()
@@ -32,7 +32,7 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
             
             if (nx, ny) in edges and moved[nx][ny] == 0:
                 moved[nx][ny] = moved[x][y] + 1
-                queue.append([nx, ny])
+                queue.append((nx, ny))
                 # print(f"현재 위치: ({nx}, {ny}), 이동 거리: {moved[nx][ny]}")
                 
             if nx == itemX * 2 and ny == itemY * 2:

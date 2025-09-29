@@ -10,7 +10,7 @@ def solution(m, n, puddles):
                 dp[i][j] = 0
             else:
                 dp[i][j] = dp[i-1][j] + dp[i][j-1]
-            print(f"dp[{i}][{j}]: {dp[i][j]}")
+            # print(f"dp[{i}][{j}]: {dp[i][j]}")
                 
     return dp[m][n] % 1000000007
 
